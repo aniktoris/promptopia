@@ -5,17 +5,21 @@ import Link from 'next/link'
 import { useState, useEffect} from 'react'
 
 const Nav = () => {
-  const isUserLoggedIn = true;
+  const {data: session} = useSession();
+
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     const setUpProviders = async () => {
-      const res = await getProviders();
-      setProviders(res);
+      if(!providers){
+        const res = await getProviders();
+        setProviders(res);
+        console.log("Fetched providers:", res);
+      }
     }
     setUpProviders();
-  }, [])
+  }, [providers])
 
   return (
     <nav className='flex-between w-full mb-16 pt-3'>
@@ -31,7 +35,7 @@ const Nav = () => {
 
       {/* Desktop Navigation */}
       <div className='sm:flex hidden'>
-      {isUserLoggedIn ? 
+      {session?.user ? 
       (<div className='flex gap-3 md:gap-5'>
         <Link href='/create-prompt'
         className='black_btn'
@@ -74,7 +78,7 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className='sm:hidden flex relative'>
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className='flex'>
             <Image
           src='/assets/images/logo.svg'
