@@ -46,6 +46,7 @@ const PromptCard = ({post, handleTagClick, handleEdit, handleDelete}) => {
           }
           width={12}
           height={12}
+          alt='copy_item'
           />
         </div>
       </div>
@@ -54,7 +55,7 @@ const PromptCard = ({post, handleTagClick, handleEdit, handleDelete}) => {
       text-gray-700'>{post.prompt}</p>
       <p className='font-inter text-sm blue_gradient cursor-pointer'
       onClick={() => handleTagClick && handleTagClick(post.tag)}
-      >{post.tag}</p>
+      >#{post.tag}</p>
 
       {session?.user.id === post.creator._id &&
       pathName === '/profile' && (
